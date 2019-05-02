@@ -1,0 +1,116 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>TodoList</title>
+    <style>
+      * {
+        margin: 0;
+        font-family: sans-serif;
+        box-sizing: border-box;
+      }
+      div {
+        border: 1px solid #d4d4d4;
+        width: 50vw;
+        margin: 200px auto;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      input {
+        padding: 5px 10px;
+        width: 100%;
+        border-radius: 2px;
+        border: 2px solid #d4d4d4;
+        outline: none;
+      }
+      ul.todolist {
+        list-style-type: none;
+        margin: 5px 0px;
+        padding: 0px;
+      }
+      ul.todolist li {
+        margin: 2px 0px;
+        width: 100%;
+        padding: 5px 10px;
+        border-bottom: 1px solid #d4d4d4;
+        border-radius: 2px;
+        display: flex;
+        justify-content: space-between;
+        transition: all 0.3s;
+      }
+      ul.todolist li:hover {
+        background: rgba(0, 0, 0, 0.15);
+      }
+      .done {
+        background-color: lightgreen;
+      }
+      span.close {
+        float: right;
+        font-family: sans-serif;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>Todo List</h1>
+      <input id="add" type="text" placeholder="Insert here..." />
+      <ul class="todolist"></ul>
+    </div>
+    <script>
+      var todolist = document.getElementsByClassName("todolist")[0];
+      var list = document.querySelectorAll("li");
+      for (i = 0; i < list.length; i++) {
+        var closeBtn = document.createElement("span");
+        var closeText = document.createTextNode("X");
+        closeBtn.appendChild(closeText);
+        closeBtn.className = "close";
+        closeBtn.onclick = function(event) {
+          event.stopPropagation();
+          var parent = this.parentElement;
+          parent.remove();
+        };
+        list[i].appendChild(closeBtn);
+        list[i].onclick = function() {
+          if (this.classList[0] === "done") {
+            this.classList.remove("done");
+          } else {
+            this.classList.add("done");
+          }
+        };
+      }
+
+      var input = document.getElementById("add");
+      input.onkeyup = function(event) {
+        if (event.keyCode === 13) {
+          // Clear value
+
+          var listItem = document.createElement("li");
+          var text = document.createTextNode(input.value);
+          listItem.appendChild(text);
+          var closeBtn = document.createElement("span");
+          var closeText = document.createTextNode("X");
+          closeBtn.appendChild(closeText);
+          closeBtn.className = "close";
+          input.value = "";
+          closeBtn.onclick = function(event) {
+            event.stopPropagation();
+            var parent = this.parentElement;
+            parent.remove();
+          };
+          listItem.appendChild(closeBtn);
+          listItem.onclick = function() {
+            if (this.classList[0] === "done") {
+              this.classList.remove("done");
+            } else {
+              this.classList.add("done");
+            }
+          };
+          todolist.appendChild(listItem);
+        }
+      };
+    </script>
+  </body>
+</html>
